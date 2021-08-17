@@ -7,6 +7,8 @@ extension RequestProtocol {
     /// - Returns: An optional `URLRequest`.
     public func urlRequest(with environment: EnvironmentProtocol) -> URLRequest? {
         // Create the base URL.
+        print(environment.baseURL)
+        
         guard let url = url(with: environment.baseURL) else {
             return nil
         }
@@ -25,6 +27,7 @@ extension RequestProtocol {
     /// - Parameter baseURL: The base URL string.
     /// - Returns: An optional `URL`.
     private func url(with baseURL: String) -> URL? {
+        print(baseURL)
         // Create a URLComponents instance to compose the url.
         guard var urlComponents = URLComponents(string: baseURL) else {
             return nil
@@ -33,18 +36,17 @@ extension RequestProtocol {
         urlComponents.path = urlComponents.path + path
         // Add query items to the request URL
         urlComponents.queryItems = queryItems
-
         return urlComponents.url
     }
 
     /// Returns the URLRequest `URLQueryItem`
     private var queryItems: [URLQueryItem]? {
         // Chek if it is a GET method.
-        guard method == .get, let parameters = parameters else {
+        guard method == .get else {
             return nil
         }
         // Convert parameters to query items.
-        return parameters.map { (key: String, value: Any?) -> URLQueryItem in
+        return parameters.map { (key: String, value: Any) -> URLQueryItem in
             let valueString = String(describing: value)
             return URLQueryItem(name: key, value: valueString)
         }
@@ -53,7 +55,7 @@ extension RequestProtocol {
     /// Returns the URLRequest body `Data`
     private var jsonBody: Data? {
         // The body data should be used for POST, PUT and PATCH only
-        guard [.post, .put, .patch].contains(method), let parameters = parameters else {
+        guard [.post, .put, .patch].contains(method) else {
             return nil
         }
         // Convert parameters to JSON data

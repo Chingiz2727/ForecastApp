@@ -31,7 +31,7 @@ enum RequestMethod: String {
 /// Type alias used for HTTP request headers.
 typealias ReaquestHeaders = [String: String]
 /// Type alias used for HTTP request parameters. Used for query parameters for GET requests and in the HTTP body for POST, PUT and PATCH requests.
-typealias RequestParameters = [String : Any?]
+typealias RequestParameters = [String : Any]
 /// Type alias used for the HTTP request download/upload progress.
 typealias ProgressHandler = (Float) -> Void
 
@@ -48,7 +48,7 @@ protocol RequestProtocol {
     var headers: ReaquestHeaders? { get }
 
     /// The request parameters used for query parameters for GET requests and in the HTTP body for POST, PUT and PATCH requests.
-    var parameters: RequestParameters? { get }
+    var parameters: RequestParameters { get }
 
     /// The request type.
     var requestType: RequestType { get }

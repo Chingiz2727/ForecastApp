@@ -1,3 +1,5 @@
+import CoreLocation
+
 protocol RootConfigurator {
     func configure()
 }
@@ -55,6 +57,14 @@ final class RootContainerConfigurator {
         
         resolver.register {
             APIRequestDispatcher(networkSession: resolver.resolve()) as RequestDispatcher
+        }.scope(Resolver.application)
+        
+        resolver.register {
+            CLLocationManager()
+        }.scope(Resolver.application)
+        
+        resolver.register {
+            LocationManagerStore(locationManager: Resolver.resolve())
         }.scope(Resolver.application)
         
         return rootContainer

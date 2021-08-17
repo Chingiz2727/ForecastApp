@@ -92,6 +92,7 @@ class APIRequestDispatcher: RequestDispatcher {
             let parseResult = parse(data: data as? Data)
             switch parseResult {
             case .success(let json):
+                
                 DispatchQueue.main.async {
                     completion(OperationResult.json(json, urlResponse))
                 }
@@ -136,14 +137,13 @@ class APIRequestDispatcher: RequestDispatcher {
     /// Parses a `Data` object into a JSON object.
     /// - Parameter data: `Data` instance to be parsed.
     /// - Returns: A `Result` instance.
-    private func parse(data: Data?) -> Result<Any, Error> {
+    private func parse(data: Data?) -> Result<Data, Error> {
         guard let data = data else {
             return .failure(APIError.invalidResponse)
         }
 
-        do {
-            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-            return .success(json)
+        do {            
+            return .success(data)
         } catch (let exception) {
             return .failure(APIError.parseError(exception.localizedDescription))
         }
@@ -156,6 +156,8 @@ class APIRequestDispatcher: RequestDispatcher {
     ///   - error: The received  optional `Error` instance.
     /// - Returns: A `Result` instance.
     private func verify(data: Any?, urlResponse: HTTPURLResponse, error: Error?) -> Result<Any, Error> {
+        print(urlResponse.url)
+        print(error)
         switch urlResponse.statusCode {
         case 200...299:
             if let data = data {

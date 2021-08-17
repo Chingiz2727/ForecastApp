@@ -13,10 +13,7 @@ public enum AppEnviroment {
     public static let bundleIdentifier = Bundle.main.bundleIdentifier ?? ""
 
     public static let baseURL: String = {
-        guard let baseURL = AppEnviroment.infoDictionary["BASE_URL"] as? String else {
-            fatalError("baseURL not found")
-        }
-        return baseURL
+        return "https://api.openweathermap.org/data/2.5/"
     }()
     
     public static let googleServiceFileName: String = {
@@ -47,7 +44,7 @@ public enum AppEnviroment {
         return appVersion
     }()
     
-    public static let yandexMetricKey: String = {
-        return "a1db6041-8ff4-4de9-b51d-f4721035ee67"
+    public static let weatherApiKey: String = {
+        return "01780cf5b88246439ec637f2c347c8e5"
     }()
 }
