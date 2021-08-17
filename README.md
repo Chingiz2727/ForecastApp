@@ -1,4 +1,4 @@
-# quiz-app
+# ForecastApp
 
 The MIT License (MIT)
 
